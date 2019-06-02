@@ -1,7 +1,7 @@
 package items;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.stream.Collectors;
 
 public class ItemManager implements CheckInable, CheckOutable {
 	private ArrayList<Book> bookShelf = new ArrayList<Book>();
@@ -10,15 +10,21 @@ public class ItemManager implements CheckInable, CheckOutable {
 
 	@Override
 	public void checkout(LibraryItem item) {
-		// find item.
-		bookShelf.stream().filter(t -> t.equals(item)).collect(Collectors.toList()).forEach(System.out::print);
-		// remove item of the shelf
+		LocalDateTime checkOutDate = LocalDateTime.now();
+		// removes item from a shelf
+		// add a checkout date
+		System.out.println(item.getTitle() + " has been checked out on " + checkOutDate);
+		bookShelf.remove(item);
+		System.out.println(bookShelf);
 	}
 
 	@Override
-	public void checkin() {
-		// TODO Auto-generated method stub
-
+	public void checkin(LibraryItem item) {
+		LocalDateTime checkInDate = LocalDateTime.now();
+		// adds item back into shelf
+		System.out.println(item.getTitle() + " has been checked in on " + checkInDate);
+		bookShelf.add((Book) item);
+		System.out.println(bookShelf);
 	}
 
 	public ArrayList<Book> addToBookShelf(Book newBook) {
